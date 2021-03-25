@@ -1,9 +1,5 @@
-/**
-node index.js \
-    --username user \
-    --room room01 \
-    --hostUri localhost
- */
+#!/usr/bin/env node
+
 
 import Events from "events";
 
