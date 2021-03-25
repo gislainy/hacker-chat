@@ -7,7 +7,8 @@
   "scripts": {
     "user01": "node index.js --username user01 --room room01 --hostUri http://localhost:9898",
     "user02": "node index.js --username user02 --room room01 --hostUri http://localhost:9898",
-    "user03": "node index.js --username user02 --room room01 --hostUri https://localhost:9898",
+    "user03": "node index.js --username user03 --room room02 --hostUri http://localhost:9898",
+    "user04": "node index.js --username user04 --room room02 --hostUri http://localhost:9898",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
