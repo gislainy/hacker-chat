@@ -7,7 +7,13 @@ export default class SocketServer {
         this.port = port;
     }
 
-    initialize (eventEmitter) {
+    async sendMessage (socket, event, message) {
+        const data = JSON.stringify({ event, message });
+
+        socket.write(`${data}\n`)
+    }
+
+    async initialize (eventEmitter) {
         const server = http.createServer((req, res) => {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end('hey there!!');
@@ -30,7 +36,7 @@ export default class SocketServer {
 
         return new Promise((resolve, reject) => {
             server.on('error', reject);
-    
+
             server.listen(this.port, () => {
                 resolve(server);
             });
