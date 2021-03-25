@@ -13,7 +13,6 @@ export default class EventManager {
 
         this.componentEmitter
             .on(constants.events.app.MESSAGE_SEND, (message) => {
-                console.log(message)
                 this.socketClient.sendMessage(constants.events.socket.MESSAGE, message);
             });
     }
@@ -25,21 +24,34 @@ export default class EventManager {
         this.#updateUsersComponent();
     }
 
-    newUserConnected(message) {
+    newUserConnected (message) {
         const user = message
         this.#allUsers.set(user.id, user.userName)
-        this.#updateUsersComponent();
         this.#updateActivityLogComponent(`${user.userName} joined!`)
+        this.#updateUsersComponent();
     }
-  
-    #emitComponentUpdate(event, message) {
-        this.componentEmitter.emit(
-            event,
-           message
+
+    disconnectUser (user) {
+        this.#allUsers.delete(user.id);
+        this.#updateActivityLogComponent(`${user.userName} left!`)
+        this.#updateUsersComponent();
+    }
+
+    message(message) {
+        this.#emitComponentUpdate(
+            constants.events.app.MESSAGE_RECEIVED,
+            message
         )
     }
 
-    #updateActivityLogComponent(message) {
+    #emitComponentUpdate (event, message) {
+        this.componentEmitter.emit(
+            event,
+            message
+        )
+    }
+
+    #updateActivityLogComponent (message) {
         this.#emitComponentUpdate(
             constants.events.app.ACTIVITY_LOG_UPDATED,
             message
